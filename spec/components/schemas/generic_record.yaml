@@ -1,0 +1,13 @@
+type: object
+properties:
+  id:
+    type: string
+    readOnly: true
+    description: Item identifier
+  namespace:
+    type: string
+  name:
+    type: string
+  _type:
+    type: string
+additionalProperties: true

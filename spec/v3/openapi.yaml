@@ -3,8 +3,25 @@ info:
   title: Cenit API v3
   version: 0.1.0
   description: |
-    Initial OpenAPI baseline for API v3 based on backend routes in `cenit/config/routes.rb`.
-    This spec documents the generic API contract and route shapes for v3.
+    # Initial OpenAPI baseline for API v3
+    
+    This spec documents the generic API contract and route shapes for v3, based on backend routes in `cenit/config/routes.rb`.
+    
+    ## API v2 vs API v3: Architectural Comparison
+
+    Cenit IO provides two versions of its API to cater to different integration styles:
+
+    | Feature | API v2 (Legacy/Action-oriented) | API v3 (Modern/Digest) |
+    | :--- | :--- | :--- |
+    | **Endpoint Structure** | Resource-specific endpoints for actions (e.g., `/run`, `/push`, `/retry`). | Consolidated `/digest` and `/digest/*digest_path` access. |
+    | **Action Mapping** | Actions are mapped to explicit controller methods. | Actions are encapsulated within the specific resource 'digest' logic. |
+    | **Consistency** | Highly flexible but less uniform across different models. | Uniform contract across all resources (`index`, `show`, `new`, `update`, `destroy`, `digest`). |
+    | **Performance** | Synchronous execution by default for most actions. | Built-in support for asynchronous operations via digest, returning execution handles. |
+    | **Protocol** | RESTful with explicit action verbs in the path. | "Digest-driven" architecture, focusing on the resource state and its available capabilities. |
+
+    **Which version to use?**
+    - Use **API v2** if you require explicit, legacy-style endpoints or are integrating with systems that expect traditional REST action mappings.
+    - Use **API v3** for new integrations where uniformity, improved asynchronous handling, and a more streamlined digest-based interaction pattern are preferred.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
@@ -315,7 +332,18 @@ paths:
       summary: Read digest endpoint
       responses:
         '200':
-          $ref: '#/components/responses/RecordItem'
+          description: Generic record response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericRecord'
+              examples:
+                flow_digest:
+                  summary: Setup::Flow digest status
+                  value:
+                    id: "66f1049fa65f0f6c8a5a0101"
+                    status: "active"
+                    last_run: "2024-03-01T10:00:00Z"
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -374,7 +402,16 @@ paths:
       summary: Delete via digest endpoint
       responses:
         '200':
-          $ref: '#/components/responses/Deleted'
+          description: Digest resource deleted
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                deleted_result:
+                  value:
+                    status: "success"
+                    message: "Digest resource removed"
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':

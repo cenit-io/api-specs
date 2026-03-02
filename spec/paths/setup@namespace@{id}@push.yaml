@@ -1,0 +1,14 @@
+parameters:
+  - $ref: '#/components/parameters/path_item_id'
+post:
+  tags:
+    - Collections
+  operationId: push_namespace
+  summary: Push a namespace
+  description: |
+    Push all resources within a namespace to another tenant or environment.
+  responses:
+    '200':
+      $ref: '#/components/responses/success_ok'
+    '404':
+      $ref: '#/components/responses/item_not_found'

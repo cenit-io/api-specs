@@ -1,0 +1,6 @@
+name: model
+in: path
+required: true
+schema:
+  type: string
+description: Model slug

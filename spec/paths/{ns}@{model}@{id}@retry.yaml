@@ -1,0 +1,27 @@
+parameters:
+  - $ref: '#/components/parameters/path_ns'
+  - $ref: '#/components/parameters/path_model'
+  - $ref: '#/components/parameters/path_item_id'
+post:
+  tags:
+    - Generic Records
+  operationId: retry_resource
+  summary: Retry a resource action
+  description: |
+    Execute a retry operation on the specified resource (typically a Task).
+  responses:
+    '200':
+      $ref: '#/components/responses/success_ok'
+    '404':
+      $ref: '#/components/responses/item_not_found'
+    '422':
+      description: Unprocessable Entity (e.g. task is not failed)
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              message:
+                type: string

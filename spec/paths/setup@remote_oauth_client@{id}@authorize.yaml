@@ -1,0 +1,16 @@
+parameters:
+  - $ref: '#/components/parameters/path_item_id'
+get:
+  tags:
+    - Security
+  operationId: authorize_remote_oauth_client
+  summary: Authorize a remote oauth client
+  description: |
+    Get the authorization URL for the specified remote oauth client.
+  responses:
+    '200':
+      $ref: '#/components/responses/authorize_url_response'
+    '404':
+      $ref: '#/components/responses/item_not_found'
+    '422':
+      $ref: '#/components/responses/item_not_found' # Or create a generic error one

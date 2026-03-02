@@ -1,0 +1,16 @@
+parameters:
+  - $ref: '#/components/parameters/path_ns'
+  - $ref: '#/components/parameters/path_model'
+  - $ref: '#/components/parameters/path_item_id'
+post:
+  tags:
+    - Generic Records
+  operationId: run_resource
+  summary: Run a resource action
+  description: |
+    Execute a run operation on the specified resource.
+  responses:
+    '200':
+      $ref: '#/components/responses/success_ok'
+    '404':
+      $ref: '#/components/responses/item_not_found'

@@ -30,6 +30,22 @@ info:
 
     * You can use your favorite HTTP/REST library for your programming language to use CenitIO APIv2.
 
+    ## API v2 vs API v3: Architectural Comparison
+
+    Cenit IO provides two versions of its API to cater to different integration styles:
+
+    | Feature | API v2 (Legacy/Action-oriented) | API v3 (Modern/Digest) |
+    | :--- | :--- | :--- |
+    | **Endpoint Structure** | Resource-specific endpoints for actions (e.g., `/run`, `/push`, `/retry`). | Consolidated `/digest` and `/digest/*digest_path` access. |
+    | **Action Mapping** | Actions are mapped to explicit controller methods. | Actions are encapsulated within the specific resource 'digest' logic. |
+    | **Consistency** | Highly flexible but less uniform across different models. | Uniform contract across all resources (`index`, `show`, `new`, `update`, `destroy`, `digest`). |
+    | **Performance** | Synchronous execution by default for most actions. | Built-in support for asynchronous operations via digest, returning execution handles. |
+    | **Protocol** | RESTful with explicit action verbs in the path. | "Digest-driven" architecture, focusing on the resource state and its available capabilities. |
+
+    **Which version to use?**
+    - Use **API v2** if you require explicit, legacy-style endpoints or are integrating with systems that expect traditional REST action mappings.
+    - Use **API v3** for new integrations where uniformity, improved asynchronous handling, and a more streamlined digest-based interaction pattern are preferred.
+
 tags:
   - name: Document Types
     description: |
